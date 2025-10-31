@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, Dropdown, Button, Space } from "antd";
 import {
   DownOutlined,
@@ -14,6 +14,27 @@ import { useAuth } from "../contexts/AuthContext";
 const Header: React.FC = () => {
   const { member, logout, isAuthenticated } = useAuth();
   const nav = useNavigate();
+
+  // ✅ Trạng thái hiển thị header
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        // Cuộn xuống => ẩn header
+        setIsVisible(false);
+      } else {
+        // Cuộn lên => hiện header
+        setIsVisible(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const userMenu = (
     <Menu
@@ -49,7 +70,11 @@ const Header: React.FC = () => {
   );
 
   return (
-    <div className="w-full bg-linear-to-r from-purple-600 to-pink-500  shadow-md bg-blend-screen opacity-90 top-0 z-50 px-10 flex items-center justify-between h-16">
+    <div
+      className={`w-full bg-[#bfae9f] shadow-md fixed z-50 top-0 px-10 flex items-center justify-between h-16 transition-transform duration-300 ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       {/* Logo */}
       <p
         className="text-white text-3xl uppercase tracking-wider cursor-pointer mb-0 font-bold"
@@ -79,7 +104,7 @@ const Header: React.FC = () => {
         ) : (
           <div className="flex items-center gap-3">
             <p
-              className="text-white! hover:text-gray-200! mb-0 cursor-pointer flex items-center gap-2"
+              className="text-white hover:text-gray-200 mb-0 cursor-pointer flex items-center gap-2"
               onClick={() => nav("/login")}
             >
               <LoginOutlined />

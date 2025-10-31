@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
         <Title level={2} className="!text-3xl !font-bold !text-gray-800">
           Sản phẩm nổi bật
         </Title>
-        <Divider className="!border-t-2 !border-pink-400 w-16 mx-auto" />
+        <Divider className="border-t-2! border-[#bfae9f]! w-16 mx-auto" />
       </div>
 
       {/* Content */}

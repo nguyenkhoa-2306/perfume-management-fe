@@ -49,7 +49,7 @@ const PerfumeCard: React.FC<Props> = ({ perfume, onSelectDetail }) => {
 
         {/* Price + Actions */}
         <div className="flex items-center justify-between mt-auto pt-2">
-          <span className="text-lg font-bold text-orange-500">
+          <span className="text-lg font-bold text-[#bfae9f] text-shadow-2xs">
             {perfume.price ? `${perfume.price.toLocaleString()} $` : ""}
           </span>
 
@@ -62,7 +62,6 @@ const PerfumeCard: React.FC<Props> = ({ perfume, onSelectDetail }) => {
                 className="text-gray-600 hover:text-orange-500 border-none shadow-sm hover:shadow-md transition-all"
               />
             </Tooltip>
-
           </div>
         </div>
       </div>
